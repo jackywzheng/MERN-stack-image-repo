@@ -5,17 +5,20 @@ const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_secret } = require("../keys");
+const { response } = require("express");
+const requireLogin = require("../middleware/requireLogin");
 
-router.get("/", (request, response) => {
-  response.send("Hello");
-});
+// Testing purposes
+// router.get("/protected", requireLogin, (request, response) => {
+//   response.send("Hello User");
+// });
 
 router.post("/signup", (request, response) => {
   const { name, password, email } = request.body;
   if (!name || !password || !email) {
     return response
       .status(422)
-      .json({ error: "Please add all the fields required" });
+      .json({ error: "Please add all the required fields!" });
   }
   // Check database if the email is already used
   User.findOne({ email: email })
@@ -23,7 +26,7 @@ router.post("/signup", (request, response) => {
       if (savedUser) {
         return response
           .status(422)
-          .json({ error: "User already exists with that email" });
+          .json({ error: "User already exists with that email!" });
       }
       // Hash password before saving to DB
       bcrypt.hash(password, 10).then((hashedPassword) => {

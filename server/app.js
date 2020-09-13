@@ -4,11 +4,6 @@ const mongoose = require("mongoose");
 const port = 3000;
 const { mongoURI } = require("./keys");
 
-require("./models/user");
-
-app.use(express.json());
-app.use(require("./routes/auth"));
-
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,6 +14,13 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", (error) => {
   console.log("Error connecting!", error);
 });
+
+require("./models/user");
+require("./models/post");
+
+app.use(express.json());
+app.use(require("./routes/auth"));
+app.use(require("./routes/post"));
 
 const middleware = (request, response, next) => {
   console.log("Middleware executed!");
