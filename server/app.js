@@ -1,6 +1,19 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const port = 3000;
+const { mongoURI } = require("./keys");
+
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+mongoose.connection.on("connected", () => {
+  console.log("Connected to mongoDB!");
+});
+mongoose.connection.on("error", (error) => {
+  console.log("Error connecting!", error);
+});
 
 const middleware = (request, response, next) => {
   console.log("Middleware executed!");
