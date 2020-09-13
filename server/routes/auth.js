@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { JWT_secret } = require("../keys");
 
 router.get("/", (request, response) => {
   response.send("Hello");
@@ -38,6 +40,36 @@ router.post("/signup", (request, response) => {
           .catch((error) => {
             console.log(error);
           });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+router.post("/signin", (request, response) => {
+  const { password, email } = request.body;
+  if (!password || !email) {
+    return response.status(422).json({
+      error: "Please provide both email and password",
+    });
+  }
+  User.findOne({
+    email: email,
+  })
+    .then((savedUser) => {
+      if (!savedUser) {
+        return response.status(422).json({ error: "Invalid credentials" });
+      }
+      bcrypt.compare(password, savedUser.password).then((passwordMatch) => {
+        if (passwordMatch) {
+          // response.json({ message: "Successful login" });
+          // create JWT token for user
+          const token = jwt.sign({ _id: savedUser._id }, JWT_secret);
+          response.json({ token });
+        } else {
+          return response.status(422).json({ error: "Invalid credentials" });
+        }
       });
     })
     .catch((error) => {
