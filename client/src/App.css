@@ -25,3 +25,13 @@ h2 {
   border-bottom: 1px solid #1976d2 !important;
   box-shadow: 0 1px 0 0 #1976d2 !important;
 }
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.item {
+  width: 30%;
+}
