@@ -31,9 +31,9 @@ router.get("/mypost", requireLogin, (request, response) => {
 
 // Create post
 router.post("/createpost", requireLogin, (request, response) => {
-  const { title, body } = request.body;
-  if (!title || !body) {
-    return response.statusCode(422).json({
+  const { title, body, image } = request.body;
+  if (!title || !body || !image) {
+    return response.status(422).json({
       error: "Please add all the required fields!",
     });
   }
@@ -42,6 +42,7 @@ router.post("/createpost", requireLogin, (request, response) => {
   const post = new Post({
     title,
     body,
+    image,
     postedBy: request.user,
   });
   post

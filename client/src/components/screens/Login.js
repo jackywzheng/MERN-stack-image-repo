@@ -35,6 +35,9 @@ const Login = () => {
         if (data.error) {
           M.toast({ html: data.error, classes: "#d81b60 pink darken-1" });
         } else {
+          // Store jwt and user in cache
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
           M.toast({
             html: "Login successful",
             classes: "#00695c teal darken-3",
