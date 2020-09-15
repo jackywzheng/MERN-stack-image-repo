@@ -41,3 +41,9 @@ h2 {
   height: max-content;
   margin: 30px auto;
 }
+
+#toast-container {
+  top: 60px !important;
+  right: 20px !important;
+  left: auto !important;
+}

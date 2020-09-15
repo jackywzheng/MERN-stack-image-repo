@@ -66,10 +66,10 @@ router.post("/signin", (request, response) => {
       }
       bcrypt.compare(password, savedUser.password).then((passwordMatch) => {
         if (passwordMatch) {
-          // response.json({ message: "Successful login" });
           // create JWT token for user
           const token = jwt.sign({ _id: savedUser._id }, JWT_secret);
-          response.json({ token });
+          const { _id, name, email } = savedUser;
+          response.json({ token, user: { _id, name, email } });
         } else {
           return response.status(422).json({ error: "Invalid credentials" });
         }
