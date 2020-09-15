@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../App";
 import M from "materialize-css";
 
 const Login = () => {
+  const { state, dispatch } = useContext(UserContext);
   // used to push to /login page
   const history = useHistory();
   // Set state of email and password
@@ -38,6 +40,8 @@ const Login = () => {
           // Store jwt and user in cache
           localStorage.setItem("jwt", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
+          // Update state
+          dispatch({ type: "USER", payload: data.user });
           M.toast({
             html: "Login successful",
             classes: "#00695c teal darken-3",
