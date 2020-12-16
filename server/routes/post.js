@@ -109,4 +109,43 @@ router.put("/comment", requireLogin, (request, response) => {
   })
 })
 
+// router.delete("deletepost/:postId", requireLogin, (request, response) => {
+//   Post.findOne({_id:request.params.postId})
+//   .populate("postedBy", "_id")
+//   .exec((error, post) => {
+//     if (error || !post) {
+//       return response.status(422).json({error:error})
+//     }
+//     if (post.postedBy._id.toString() === request.user._id.toString()) {
+//       post.remove()
+//       .then(result => {
+//         response.json(result)
+//       }).catch(error => {
+//         console.log(error)
+//       })
+//     }
+//   })
+// })
+
+router.delete("/deletepost/:postId", requireLogin, (request, response) => {
+  Post.findOne({ _id: request.params.postId })
+    .populate("postedBy", "_id")
+    .exec((error, post) => {
+      if (error || !post) {
+        return response.status(422).json({ error: error });
+      }
+      if (post.postedBy._id.toString() === request.user._id.toString()) {
+        post
+          .remove()
+          .then((result) => {
+            response.json(result);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+});
+
+
 module.exports = router;
