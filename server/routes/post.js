@@ -6,7 +6,7 @@ const { request } = require("express");
 const Post = mongoose.model("Post");
 
 // Show all posts created by all users
-router.get("/allpost", (request, response) => {
+router.get("/allpost", requireLogin, (request, response) => {
   Post.find()
     .populate("postedBy", "_id name")
     .then((posts) => {

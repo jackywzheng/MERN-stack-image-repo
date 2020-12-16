@@ -21,7 +21,6 @@ const Routing = () => {
     if (user) {
       // Maintain state even after user leaves application, but doesn't logout
       dispatch({ type: "USER", payload: user });
-      history.push("/");
     } else {
       history.push("/login");
     }

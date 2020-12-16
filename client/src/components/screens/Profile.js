@@ -1,6 +1,19 @@
-import React from "react";
+import React, {useEffect, useState, useContext} from "react";
+import {UserContext} from "../../App"
 
 const Profile = () => {
+  const [myPosts, setPosts] = useState([])
+  const {state, dispatch} = useContext(UserContext)
+  useEffect(() => {
+    fetch('/mypost', {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("jwt")
+      }
+    }).then(response => response.json())
+    .then(result => {
+      setPosts(result.mypost)
+    })
+  })
   return (
     <div style={{ maxWidth: "550px", margin: "0px auto" }}>
       <div>
@@ -16,11 +29,11 @@ const Profile = () => {
             <img
               style={{ width: "160px", height: "160px", borderRadius: "80px" }}
               alt="profile"
-              src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
+              src="https://images.unsplash.com/photo-1587930734782-4fe289d9ea8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
             />
           </div>
           <div>
-            <h4>Jacky Zheng</h4>
+          <h4>{state?state.name: "loading"}</h4>
             <div
               style={{
                 display: "flex",
@@ -36,36 +49,17 @@ const Profile = () => {
         </div>
       </div>
       <div className="gallery">
-        <img
-          className="item"
-          alt="gallery"
-          src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
-        />
-        <img
-          className="item"
-          alt="gallery"
-          src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
-        />
-        <img
-          className="item"
-          alt="gallery"
-          src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
-        />
-        <img
-          className="item"
-          alt="gallery"
-          src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
-        />
-        <img
-          className="item"
-          alt="gallery"
-          src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
-        />
-        <img
-          className="item"
-          alt="gallery"
-          src="https://scontent.fyvr4-1.fna.fbcdn.net/v/t1.0-9/119056505_10158869358216983_4624107452860068230_o.jpg?_nc_cat=103&_nc_sid=09cbfe&_nc_ohc=lu3roo-cNhAAX_gQSxK&_nc_ht=scontent.fyvr4-1.fna&oh=426d64dbafd9ccf64c8e50bb3edb3a96&oe=5F85633A"
-        />
+        {
+          myPosts.map(item=> {
+            return(
+            <img key={item._id}
+              className="item"
+              alt="gallery"
+              src={item.image}
+              alt={item.title}
+            />)
+          })
+        }
       </div>
     </div>
   );
