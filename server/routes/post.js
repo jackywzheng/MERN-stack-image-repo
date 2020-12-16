@@ -55,4 +55,32 @@ router.post("/createpost", requireLogin, (request, response) => {
     });
 });
 
+router.put("/like", requireLogin, (request, response) => {
+  Post.findByIdAndUpdate(request.body.postId, {
+    $push:{likes:request.user._id}
+  }, {
+    new: true
+  }).exec((error, result) => {
+    if (error) {
+      return response.status(422).json({error:error})
+    } else {
+      response.json(result)
+    }
+  })
+})
+
+router.put("/unlike", requireLogin, (request, response) => {
+  Post.findByIdAndUpdate(request.body.postId, {
+    $pull:{likes:request.user._id}
+  }, {
+    new: true
+  }).exec((error, result) => {
+    if (error) {
+      return response.status(422).json({error:error})
+    } else {
+      response.json(result)
+    }
+  })
+})
+
 module.exports = router;
