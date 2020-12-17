@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const port = process.env.port || 5000;
 const { mongoURI } = require("./config/keys");
+const path = require("path")
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
@@ -40,13 +41,14 @@ app.use(middleware);
 //   response.send("About page!");
 // });
 
-if (process.env.node_env = "production") {
-  app.use(express.static("client/build"));
-  const path = require('path');
-  app.get("*", (request, response) => {
-    response.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  })
-}
+// if (process.env.node_env = "production") {
+
+// }
+
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+})
 
 app.listen(port, () => {
   console.log("Server is running on", port);
