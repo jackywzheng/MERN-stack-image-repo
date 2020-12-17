@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const port = 5000;
-const { mongoURI } = require("./keys");
+const port = process.env.port || 5000;
+const { mongoURI } = require("./config/keys");
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
@@ -21,6 +21,7 @@ require("./models/post");
 app.use(express.json());
 app.use(require("./routes/auth"));
 app.use(require("./routes/post"));
+app.use(require("./routes/user"));
 
 const middleware = (request, response, next) => {
   console.log("Middleware executed!");
@@ -29,15 +30,23 @@ const middleware = (request, response, next) => {
 
 app.use(middleware);
 
-app.get("/", (request, response) => {
-  console.log("Home page");
-  response.send("Hello world!");
-});
+// app.get("/", (request, response) => {
+//   console.log("Home page");
+//   response.send("Hello world!");
+// });
 
-app.get("/about", (request, response) => {
-  console.log("About page");
-  response.send("About page!");
-});
+// app.get("/about", (request, response) => {
+//   console.log("About page");
+//   response.send("About page!");
+// });
+
+if (process.env.node_env = "production") {
+  app.use(express.static("client/build"));
+  const path = require('path');
+  app.get("*", (request, response) => {
+    response.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  })
+}
 
 app.listen(port, () => {
   console.log("Server is running on", port);

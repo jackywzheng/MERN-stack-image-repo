@@ -9,13 +9,13 @@ const NavBar = () => {
     // If logged in only show Profile and Create Post in navbar
     if (state) {
       return [
-        <li>
+        <li key="profile">
           <Link to="/profile">Profile</Link>
         </li>,
-        <li>
+        <li key="createpost">
           <Link to="/create">Create Post</Link>
         </li>,
-        <li>
+        <li key="logout">
           <button
             className="btn #c62828 red darken-3"
             onClick={() => {
@@ -31,10 +31,10 @@ const NavBar = () => {
       // Else, only show Login and Sign up
     } else {
       return [
-        <li>
+        <li key="login">
           <Link to="/login">Login</Link>
         </li>,
-        <li>
+        <li key="signup">
           <Link to="/signup">Sign up</Link>
         </li>,
       ];
