@@ -31,24 +31,13 @@ const middleware = (request, response, next) => {
 
 app.use(middleware);
 
-// app.get("/", (request, response) => {
-//   console.log("Home page");
-//   response.send("Hello world!");
-// });
-
-// app.get("/about", (request, response) => {
-//   console.log("About page");
-//   response.send("About page!");
-// });
-
-// if (process.env.node_env = "production") {
-
-// }
-
-app.use(express.static(path.join(__dirname, "client/build")));
-app.get("*", (request, response) => {
-  response.sendFile(path.join(__dirname, "client/build", "index.html"));
-})
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static("client/build"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.listen(port, () => {
   console.log("Server is running on", port);
