@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const port = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 const { mongoURI } = require("./config/keys");
 const path = require("path")
 
@@ -31,7 +31,7 @@ const middleware = (request, response, next) => {
 
 app.use(middleware);
 
-if (process.env.NODE_ENV == "production") {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   const path = require("path");
   app.get("*", (req, res) => {
@@ -39,8 +39,8 @@ if (process.env.NODE_ENV == "production") {
   });
 }
 
-app.listen(port, () => {
-  console.log("Server is running on", port);
+app.listen(PORT, () => {
+  console.log("Server is running on", PORT);
 });
 
 // heroku
