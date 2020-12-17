@@ -45,9 +45,9 @@ app.use(middleware);
 
 // }
 
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "build")));
 app.get("*", (request, response) => {
-  response.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  response.sendFile(path.join(__dirname, "build", "index.html"));
 })
 
 app.listen(port, () => {
