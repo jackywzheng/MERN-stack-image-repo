@@ -65,4 +65,30 @@ router.put("/unfollow", requireLogin, (request, response) => {
     })
 })
 
+
+router.put("/updatepic", requireLogin, (request, response) => {
+    User.findByIdAndUpdate(request.user._id, {$set:{
+        pic: request.body.pic
+    }}, {
+        new: true
+    }, (error, result) => {
+        if (error) {
+            return response.status(422).json({error: "Profile pic could not be updated"})
+        }
+        response.json(result)
+    })
+})
+
+router.post("/searchusers", (request, response) => {
+    // Use RegEx pattern for search
+    let userPattern = new RegExp("^" + request.body.query)
+    User.find({email: {$regex: userPattern}})
+    .select("_id email")
+    .then(user => {
+        response.json({user})
+    }).catch(error => {
+        console.log(error)
+    })
+})
+
 module.exports = router;

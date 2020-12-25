@@ -14,7 +14,7 @@ const requireLogin = require("../middleware/requireLogin");
 // });
 
 router.post("/signup", (request, response) => {
-  const { name, password, email } = request.body;
+  const { name, password, email, pic } = request.body;
   if (!name || !password || !email) {
     return response
       .status(422)
@@ -34,6 +34,7 @@ router.post("/signup", (request, response) => {
           name,
           password: hashedPassword,
           email,
+          pic
         });
         user
           .save()
@@ -68,8 +69,8 @@ router.post("/signin", (request, response) => {
         if (passwordMatch) {
           // create JWT token for user
           const token = jwt.sign({ _id: savedUser._id }, JWT_secret);
-          const { _id, name, email } = savedUser;
-          response.json({ token, user: { _id, name, email } });
+          const { _id, name, email, followers, following, pic } = savedUser;
+          response.json({ token, user: { _id, name, email, followers, following, pic } });
         } else {
           return response.status(422).json({ error: "Invalid credentials" });
         }

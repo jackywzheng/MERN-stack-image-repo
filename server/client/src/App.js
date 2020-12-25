@@ -8,6 +8,7 @@ import Profile from "./components/screens/Profile";
 import Signup from "./components/screens/Signup";
 import CreatePost from "./components/screens/CreatePost";
 import UserProfile from "./components/screens/UserProfile";
+import FollowedPosts from "./components/screens/FollowedPosts";
 import { reducer, initialState } from "./reducers/userReducer";
 
 // For token and user state
@@ -45,6 +46,9 @@ const Routing = () => {
       </Route>
       <Route path="/profile/:userid">
         <UserProfile />
+      </Route>
+      <Route path="/followedposts">
+        <FollowedPosts />
       </Route>
     </Switch>
   );

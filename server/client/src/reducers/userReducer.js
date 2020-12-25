@@ -2,7 +2,7 @@ export const initialState = null;
 
 // Whenever state changes, component will re-render
 export const reducer = (state, action) => {
-  if (action.type === "USER") {
+  if (action.type == "USER") {
     return action.payload;
   }
   if (action.type == "CLEAR") {
@@ -14,6 +14,12 @@ export const reducer = (state, action) => {
       followers: action.payload.followers,
       following: action.payload.following
     }
+  }
+  if (action.type == "UPDATEPIC") {
+    return {
+      ...state,
+      pic: action.payload
+    };
   }
   return state;
 };

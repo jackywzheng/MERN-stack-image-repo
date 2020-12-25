@@ -5,9 +5,26 @@ const requireLogin = require("../middleware/requireLogin");
 const { request } = require("express");
 const Post = mongoose.model("Post");
 
-// Show all posts created by all users
+// Show all posts created by all users, sorted by newest first
 router.get("/allpost", requireLogin, (request, response) => {
   Post.find()
+    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
+    .sort("-createdAt")
+    .then((posts) => {
+      response.json({ posts });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+// Show only your followed users' posts
+router.get("/followedposts", requireLogin, (request, response) => {
+  // if postedBy is in your following 
+  Post.find({postedBy: {
+    $in: request.user.following
+  }})
     .populate("postedBy", "_id name")
     .populate("comments.postedBy", "_id name")
     .then((posts) => {
