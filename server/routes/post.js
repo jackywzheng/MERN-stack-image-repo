@@ -8,8 +8,8 @@ const Post = mongoose.model("Post");
 // Show all posts created by all users, sorted by newest first
 router.get("/allpost", requireLogin, (request, response) => {
   Post.find()
-    .populate("postedBy", "_id name")
-    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name pic")
+    .populate("comments.postedBy", "_id name pic")
     .sort("-createdAt")
     .then((posts) => {
       response.json({ posts });
@@ -25,8 +25,8 @@ router.get("/followedposts", requireLogin, (request, response) => {
   Post.find({postedBy: {
     $in: request.user.following
   }})
-    .populate("postedBy", "_id name")
-    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name pic")
+    .populate("comments.postedBy", "_id name pic")
     .then((posts) => {
       response.json({ posts });
     })
@@ -38,7 +38,7 @@ router.get("/followedposts", requireLogin, (request, response) => {
 // Show all posts created by user
 router.get("/mypost", requireLogin, (request, response) => {
   Post.find({ postedBy: request.user._id })
-    .populate("postedBy", "_id name")
+    .populate("postedBy", "_id name pic")
     .then((mypost) => {
       response.json({ mypost });
     })
@@ -49,8 +49,8 @@ router.get("/mypost", requireLogin, (request, response) => {
 
 // Create post
 router.post("/createpost", requireLogin, (request, response) => {
-  const { title, body, image } = request.body;
-  if (!title || !body || !image) {
+  const { body, image } = request.body;
+  if (!body || !image) {
     return response.status(422).json({
       error: "Please add all the required fields!",
     });
@@ -58,7 +58,6 @@ router.post("/createpost", requireLogin, (request, response) => {
   // Do not include password in response
   request.user.password = undefined;
   const post = new Post({
-    title,
     body,
     image,
     postedBy: request.user,

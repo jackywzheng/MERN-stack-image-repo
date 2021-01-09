@@ -121,9 +121,8 @@ const Profile = () => {
               <img
                 key={item._id}
                 className="item"
-                alt="gallery"
                 src={item.image}
-                alt={item.title}
+                alt={item._id}
               />
             );
           })}

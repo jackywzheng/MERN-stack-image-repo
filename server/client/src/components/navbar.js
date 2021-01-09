@@ -18,7 +18,7 @@ const NavBar = () => {
     if (state) {
       return [
         <li key="search">
-          <i data-target="modal1" className="large material-icons modal-trigger" style={{color: "black"}}>search</i>
+          <i data-target="modal1" className="large material-icons modal-trigger" style={{color: "black", marginRight: "10px"}}>search</i>
         </li>,
         <li key="profile">
           <Link to="/profile">Profile</Link>
@@ -27,7 +27,7 @@ const NavBar = () => {
           <Link to="/create">Create Post</Link>
         </li>,
         <li key="followedposts">
-          <Link to="/followedposts">Following Posts</Link>
+          <Link to="/followedposts">Following</Link>
         </li>,
         <li key="logout">
           <button
@@ -36,6 +36,9 @@ const NavBar = () => {
               localStorage.clear();
               dispatch({ type: "CLEAR" });
               history.push("/login");
+            }}
+            style={{
+              marginRight: "10px"
             }}
           >
             Logout
@@ -75,7 +78,7 @@ const NavBar = () => {
   return (
     <nav>
       <div className="nav-wrapper white">
-        <Link to={state ? "/" : "/login"} className="brand-logo left">
+        <Link to={state ? "/" : "/login"} className="brand-logo left" style={{marginLeft:"10px"}}>
           Shopigram
         </Link>
         <ul id="nav-mobile" className="right">
@@ -108,7 +111,7 @@ const NavBar = () => {
                     setSearch("");
                   }}
                 >
-                  <li key="results" className="collection-item">{item.email}</li>
+                  <li key="results" className="collection-item">{item.name}</li>
                 </Link>
               );
             })}

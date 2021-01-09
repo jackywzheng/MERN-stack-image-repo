@@ -17,7 +17,7 @@ export const UserContext = createContext();
 // Can make use of history routing here
 const Routing = () => {
   const history = useHistory();
-  const { state, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {

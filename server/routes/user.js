@@ -82,8 +82,8 @@ router.put("/updatepic", requireLogin, (request, response) => {
 router.post("/searchusers", (request, response) => {
     // Use RegEx pattern for search
     let userPattern = new RegExp("^" + request.body.query)
-    User.find({email: {$regex: userPattern}})
-    .select("_id email")
+    User.find({name: {$regex: userPattern, $options: "i"}})
+    .select("_id name")
     .then(user => {
         response.json({user})
     }).catch(error => {

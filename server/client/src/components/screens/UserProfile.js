@@ -73,7 +73,7 @@ const Profile = () => {
       localStorage.setItem("User", JSON.stringify(data))
       // This logic is suboptimal
       setProfile((previousState) => {
-        const newFollowers = previousState.user.followers.filter(item => item != data._id);
+        const newFollowers = previousState.user.followers.filter(item => item !== data._id);
         return {
           ...previousState,
           user: {
@@ -154,9 +154,8 @@ const Profile = () => {
                 <img
                   key={item._id}
                   className="item"
-                  alt="gallery"
                   src={item.image}
-                  alt={item.title}
+                  alt={item._id}
                 />
               );
             })}

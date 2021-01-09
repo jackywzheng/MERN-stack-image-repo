@@ -4,7 +4,7 @@ import { UserContext } from "../../App";
 import M from "materialize-css";
 
 const Login = () => {
-  const { state, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   // used to push to /login page
   const history = useHistory();
   // Set state of email and password
@@ -61,7 +61,7 @@ const Login = () => {
           type="text"
           placeholder="E-mail"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value.toLowerCase())}
         />
         <input
           type="password"
