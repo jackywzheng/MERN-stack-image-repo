@@ -50,7 +50,11 @@ const CreatePost = () => {
       method: "post",
       body: data,
     })
-      .then((response) => response.json())
+      .then((response) => {
+        response.json()
+        if (response.status === 400) {
+          M.toast({ html: response.statusText, classes: "#d81b60 pink darken-1" });
+      }})
       .then((data) => {
         setUrl(data.url);
       })
@@ -81,6 +85,7 @@ const CreatePost = () => {
           <span>Upload Image</span>
           <input
             type="file"
+            accept=".png,.jpg,.jpeg"
             onChange={(e) => {
               setImage(e.target.files[0]);
             }}
