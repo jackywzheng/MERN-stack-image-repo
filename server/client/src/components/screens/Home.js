@@ -34,7 +34,7 @@ const Home = () => {
         // console.log(result)
         const newData = data.map((item) => {
           if (item._id === result._id) {
-            return result;
+            return {...item, likes: result.likes};
           } else {
             return item;
           }
@@ -62,7 +62,7 @@ const Home = () => {
         // console.log(result)
         const newData = data.map((item) => {
           if (item._id === result._id) {
-            return result;
+            return {...item, likes: result.likes};
           } else {
             return item;
           }
