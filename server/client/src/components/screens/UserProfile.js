@@ -88,7 +88,7 @@ const Profile = () => {
   return (
     <>
       {userProfile ? (
-        <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+        <div style={{ maxWidth: "600px", margin: "0px auto" }}>
           <div>
             <div
               style={{
@@ -111,7 +111,6 @@ const Profile = () => {
               </div>
               <div>
                 <h4>{userProfile.user.name}</h4>
-                <h5>{userProfile.user.email}</h5>
                 <div
                   style={{
                     display: "flex",
@@ -127,7 +126,7 @@ const Profile = () => {
                   showFollow ?
                   <button 
                   style={{
-                    margin: "10px"
+                    marginTop: "10px"
                   }}
                   className="btn waves-effect waves-light #1976d2 blue darken-2"
                   onClick={() => followUser()}
@@ -137,7 +136,7 @@ const Profile = () => {
                   :               
                   <button
                   style={{
-                    margin: "10px"
+                    marginTop: "10px"
                   }}
                   className="btn waves-effect waves-light #1976d2 blue darken-2"
                   onClick={() => unfollowUser()}
@@ -151,12 +150,20 @@ const Profile = () => {
           <div className="gallery">
             {userProfile.posts.map((item) => {
               return (
-                <img
-                  key={item._id}
-                  className="item"
-                  src={item.image}
-                  alt={item._id}
-                />
+                <a href={item.image}>
+                  <img
+                    key={item._id}
+                    className="item"
+                    src={item.image}
+                    alt={item._id}
+                    style={{
+                      margin: "5px",
+                      width: "180px",
+                      height: "180px",
+                      overflow: "hidden"
+                    }}
+                  />
+                </a>
               );
             })}
           </div>

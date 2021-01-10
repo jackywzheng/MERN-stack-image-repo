@@ -62,7 +62,7 @@ const Profile = () => {
     )
   } else {
     return (
-      <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+      <div style={{ maxWidth: "600px", margin: "0px auto" }}>
         <div
           style={{
             margin: "20px 0px",
@@ -84,7 +84,6 @@ const Profile = () => {
             </div>
             <div>
               <h4>{state ? state.name : "loading"}</h4>
-              <h5>{state ? state.email : "loading"}</h5>
               <div
                 style={{
                   display: "flex",
@@ -117,13 +116,21 @@ const Profile = () => {
         </div>
         <div className="gallery">
           {myPosts.map((item) => {
-            return (
-              <img
-                key={item._id}
-                className="item"
-                src={item.image}
-                alt={item._id}
-              />
+              return (
+                <a href={item.image}>
+                  <img
+                    key={item._id}
+                    className="item"
+                    src={item.image}
+                    alt={item._id}
+                    style={{
+                      margin: "5px",
+                      width: "180px",
+                      height: "180px",
+                      overflow: "hidden"
+                    }}
+                  />
+                </a>
             );
           })}
         </div>
