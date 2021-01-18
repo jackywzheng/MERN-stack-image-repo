@@ -31,21 +31,16 @@ const middleware = (request, response, next) => {
 
 app.use(middleware);
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static("client/build"));
-//   const path = require("path");
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
-// app.listen(PORT, () => {
-//   console.log("Server is running on", PORT);
-// });
+app.listen(PORT, () => {
+  console.log("Server is running on", PORT);
+});
 
 // heroku
-
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 5000;
-const server = app.listen(port, function () {
-    console.log('Server listening on port ' + port);
-});
