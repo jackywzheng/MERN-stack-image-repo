@@ -56,9 +56,9 @@ const CreatePost = () => {
           M.toast({ 
             html: data.error.message, 
             classes: "#d81b60 pink darken-1" });
-        };
-        console.log(data)
-        setUrl(data.secure_url);
+        } else {
+          setUrl(data.secure_url);
+        }
       })
       .catch((error) => {
         console.log(error);
