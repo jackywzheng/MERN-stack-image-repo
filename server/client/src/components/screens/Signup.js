@@ -31,7 +31,7 @@ const Signup = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUrl(data.url);
+        setUrl(data.secure_url);
       })
       .catch((error) => {
         console.log(error);

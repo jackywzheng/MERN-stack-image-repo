@@ -50,13 +50,15 @@ const CreatePost = () => {
       method: "post",
       body: data,
     })
-      .then((response) => {
-        response.json()
-        if (response.status === 400) {
-          M.toast({ html: response.statusText, classes: "#d81b60 pink darken-1" });
-      }})
+      .then((response) => response.json())
       .then((data) => {
-        setUrl(data.url);
+        if (data.error) {
+          M.toast({ 
+            html: data.error.message, 
+            classes: "#d81b60 pink darken-1" });
+        };
+        console.log(data)
+        setUrl(data.secure_url);
       })
       .catch((error) => {
         console.log(error);
